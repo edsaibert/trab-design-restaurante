@@ -40,45 +40,45 @@ http://127.0.0.1:8000/docs
 
 ├── README.md
 │
-├── docs                            // Documentação dos requisitos, ASRs, etc...
-│   ├── adr
+├── docs/                           // Documentação dos requisitos, ASRs, etc...
+│   ├── adr/
 │   │   ├── ADR-001.md
 │   │   ├── ADR-002.md
 │   │   └── ADR-003.md
-│   ├── diagramas
-│   │   ├── classes
+│   ├── diagramas/
+│   │   ├── classes/
 │   │   │   ├── Diagrama de Classes.drawio
 │   │   │   ├── Diagrama de Classes.png
-│   │   └── sequencia
-│   │       ├── Alterar Cardápio
+│   │   └── sequencia/
+│   │       ├── Alterar Cardápio/
 │   │       │   ├── Diagrama de Sequência - Alterar Cardápio.drawio
 │   │       │   └── Diagrama de Sequência - Alterar Cardápio.png
-│   │       ├── Caso de Uso Principal
+│   │       ├── Caso de Uso Principal/
 │   │       │   ├── Diagrama de Sequência - Caso de Uso Principal.drawio
 │   │       │   └── Diagrama de Sequência - Caso de Uso Principal.png
-│   │       └── Login
+│   │       └── Login/
 │   │           ├── Diagrama de Sequência - Login.drawio
 │   │           └── Diagrama de Sequência - Login.png
 │   ├── arquitetura.md
 │   ├── requisitos.md
 │   └── tradeoffs.md
 │
-└── src
-    ├── database                    // Repositories
+└── src/
+    ├── database/                    // Repositories
     │   ├── CardapioRepository.py
     │   ├── database.py             // Conexão com o MySQL 
     │   └── PedidoRepository.py
-    ├── interfaces                  // Interfaces
+    ├── interfaces/                  // Interfaces
     │   ├── IAuthService.py
     │   ├── ICardapioService.py
     │   └── IPedidoService.py
     ├── main.py
-    ├── models                      // Entidades do domínio
+    ├── models/                      // Entidades do domínio
     │   ├── Cardapio.py
     │   ├── Item.py
     │   └── Pedido.py
     ├── router.py                   // Controller
-    └── services                    // Serviços da Aplicação
+    └── services/                    // Serviços da Aplicação
         ├── CardapioService.py
         ├── LoginService.py
         └── PedidoService.py
