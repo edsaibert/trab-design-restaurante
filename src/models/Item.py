@@ -7,6 +7,5 @@ class Item:
         self.vegano = vegano
         self.disponibilidade = disponibilidade
 
-    def atualizarPorcoes(self, quantidade):
-        self.porcoes = max(porcoes + quantidade, 0)
+    def atualizar_disponibilidade(self):
         self.disponibilidade = self.porcoes == 0
