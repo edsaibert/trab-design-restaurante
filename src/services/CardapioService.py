@@ -1,16 +1,19 @@
 from src.models.Cardapio import Cardapio
 
 class CardapioService:
-    def __init__(self, ):
-
-    def criar_cardapio(self, cardapioId, data):
-        novoCardapio = Cardapio(cardapioId = cardapioId, data = data, itens = [])
+    def criarCardapio(self, cardapioId, data, dicioItens):
+        novoCardapio = Cardapio(
+            cardapioId = cardapioId, 
+            data = data, 
+            dicioItens = dicioItens
+        )
+        
         return novoCardapio
 
-    def consultar_cardapio(self, cardapio):
+    def consultarCardapio(self, cardapio):
         return cardapio.itens
 
-    def atualizar_cardapio(self, cardapio, listaAtualizacoes):
+    def atualizarCardapio(self, cardapio, listaAtualizacoes):
         for itemLista in listaAtualizacoes:
             for itemCardapio in cardapio:
                 if itemLista.id == itemCardapio.id:
