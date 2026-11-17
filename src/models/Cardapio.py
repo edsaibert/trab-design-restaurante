@@ -2,41 +2,38 @@ from src.models.Item import Item
 import datetime
 
 class Cardapio:
-    def __init__(self, cardapio_id, data):
-        self.cardapio_id = cardapio_id
-        self.data = data.date
+    def __init__(self, cardapioId, data):
+        self.cardapioId = cardapioId
+        self.data = data.date() 
         self.itens = []
 
-    def adicionar_item(self, item):
-        self.itens.append(item)
-        print("item adicionado")
+    def cria_item(self, itemId, itemNome, itemPorcoes, 
+                    tamanhoPorcao, itemVegano, itemDisponibilidade):
+        novoItem = Item(id = itemId, nome = itemNome, porcoes = itemPorcoes,
+                            tamanhoPorcao = tamanhoPorcao, vegano = itemVegano, disponibilidade = itemDisponibilidade)
 
-    def remover_item(self, id):
-        for indiceItem, item in enumerate(self.itens):
-            if item.id == id:
-                self.itens.pop(indiceItem)
-                print("item removido")
+        return novoItem
+        
+    def adicionar_item(self, cardapio, item):
+        cardapio.itens.append(item)
+
+    def remover_item(self, cardapio, itemId):
+        for indiceItem, item in enumerate(cardapio.itens):
+            if item.id == itemId:
+                cardapio.itens.pop(indiceItem)
                 return
-
-        print("item nao encontrado")
-
-    def atualizar_item(self, id, novoNome, novasPorcoes, novoTamanho, vegano):
+    
+    def atualizar_item(self, itemId, novoNome, novasPorcoes, novoTamanho, vegano):
         for item in self.itens:
-            if item.id == id:
+            if item.id == itemId:
                 item.nome = novoNome
                 item.porcoes = novasPorcoes
                 item.tamanhoPorcao = novoTamanho
                 item.vegano = vegano
-                print("item atualizado")
                 return
-        print("item nao encontrado")
 
-    def cardapio_itens(self):
-        if not self.itens:
-            print("nenhum item no cardapio")
-            return []
-
-        print("cardapio:")
-        for item in self.itens:
-            print(f"- id: {item.item_id} | nome: {item.nome} | porcoes: {item.porcoes}")
-        return self.itens
+    def consultar_disponibilidade(self, cardapio, itemId, quantidade):
+        for item in cardapio.itens:
+            if item.id == itemId:
+                return item.disponibilidade(quantidade)
+        return False
