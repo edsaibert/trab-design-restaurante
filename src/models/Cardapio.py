@@ -9,8 +9,15 @@ class Cardapio:
 
     def criaItem(self, itemId, itemNome, itemPorcoes, 
                     tamanhoPorcao, itemVegano, itemDisponibilidade):
-        novoItem = Item(id = itemId, nome = itemNome, porcoes = itemPorcoes,
-                            tamanhoPorcao = tamanhoPorcao, vegano = itemVegano, disponibilidade = itemDisponibilidade)
+        
+        novoItem = Item(    
+                            id = itemId, 
+                            nome = itemNome, 
+                            porcoes = itemPorcoes,
+                            tamanhoPorcao = tamanhoPorcao,
+                            vegano = itemVegano,
+                            disponibilidade = itemDisponibilidade
+                        )
 
         return novoItem
         

@@ -1,7 +1,11 @@
 from fastapi import APIRouter, Depends, Header, HTTPException
-from services.PedidoService import PedidoService
-from services.CardapioService import CardapioService
-from services.LoginService import LoginService
+
+from src.database.database import get_db
+from src.database.CardapioRepository import CardapioRepository
+
+from src.services.PedidoService import PedidoService
+from src.services.CardapioService import CardapioService
+from src.services.LoginService import LoginService
 
 router = APIRouter()
 
@@ -13,9 +17,9 @@ login_service = LoginService
 def login():
     return login_service.login()
 
-@router.get("/cardapio")
-def consultar_cardapio():
-    return cardapio_service.consultar_cardapio()
+@router.get("/cardapio/{cardapioId}")
+def consultar_cardapio(cardapioId):
+    return cardapio_service.consultarCardapio()
 
 @router.post("/pedido")
 def criar_pedido():
