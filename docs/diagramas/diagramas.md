@@ -1,7 +1,7 @@
 # Diagramas de Arquitetura
 
 ## Diagrama de Classes
-
+As classes construtoras que utilizam as interfaces de `CardapioRepository`, `PedidoRepository`, `LogRepository` e `RULogin` não foram consideradas no diagrama para facilitar a visualização. No sistema atual, foi proposta apenas uma implementação concreta para cada classe.
 
 ![diagrama_classes](./classes/Diagrama%20de%20Classes.png)
 
