@@ -26,7 +26,7 @@ pip freeze > requirements.txt
 
 Rode a aplicação dentro do ambiente virtual, com o comando abaixo:
 ```bash
-uvicorn app.main:app --reload
+uvicorn src.main:app --reload
 ```
 
 Visualize os `endpoints` por meio do `swagger`:
