@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, Header, HTTPException
 
-from src.schemas.Pedido import PedidoInputSchema, PedidoResponseSchema
-from src.schemas.Cardapio import CardapioInputSchema, CardapioResponseSchema
-from src.schemas.ItemCardapio import ItemCardapioInputSchema
+from src.schemas.PedidoSchema import PedidoInputSchema, PedidoResponseSchema
+from src.schemas.CardapioSchema import CardapioInputSchema, CardapioResponseSchema
+from src.schemas.ItemCardapioSchema import ItemCardapioInputSchema
 
 from src.models.ItemCardapio import ItemCardapio
 
@@ -44,7 +44,11 @@ def criar_cardapio(cardapioInput: CardapioInputSchema):
         itens
     )
 
-    return cardapio
+    return {
+        "id": cardapio.id,
+        "data": cardapio.data,
+        "listaItens": cardapio.itens
+    }
 
 @router.put("/cardapio", response_model=CardapioResponseSchema)
 def atualizar_cardapio(atualizacoes: list[ItemCardapioInputSchema]):
@@ -62,7 +66,11 @@ def atualizar_cardapio(atualizacoes: list[ItemCardapioInputSchema]):
 
     cardapio = cardapio_service.atualizarCardapio(itens)
 
-    return cardapio
+    return {
+        "id": cardapio.id,
+        "data": cardapio.data,
+        "listaItens": cardapio.itens
+    }
 
 @router.post("/pedido")
 def criar_pedido(Pedido: PedidoInputSchema) -> PedidoResponseSchema:

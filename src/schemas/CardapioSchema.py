@@ -2,11 +2,11 @@ from pydantic import BaseModel, Field
 from itertools import count
 from datetime import datetime
 
-from src.schemas.ItemCardapio import ItemCardapioInputSchema, ItemCardapioResponseSchema
+from src.schemas.ItemCardapioSchema import ItemCardapioInputSchema, ItemCardapioResponseSchema
 
 class CardapioInputSchema(BaseModel):
-    #id: int = Field(default_factory=count(1).__next__) definido pelo repository
-    #data: datetime                                     definido pelo repository
+    #id: int = Field(default_factory=count(1).__next__)
+    data: datetime = Field(default_factory=datetime.now)
     listaItens: list[ItemCardapioInputSchema]
 
 class CardapioResponseSchema(BaseModel):

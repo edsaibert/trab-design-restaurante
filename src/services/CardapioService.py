@@ -11,7 +11,7 @@ class CardapioService(ICardapioService):
 
     def criarCardapio(self, data, listaItens: list[ItemCardapio]): 
         cardapio = Cardapio(
-            cardapioId=None,
+            cardapioId=1,
             data=data,
             itens=listaItens
         )
