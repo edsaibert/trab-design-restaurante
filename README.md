@@ -63,24 +63,28 @@ http://127.0.0.1:8000/docs
 │   ├── requisitos.md
 │   └── tradeoffs.md
 │
-└── src/
-    ├── database/                    // Repositories
-    │   ├── CardapioRepository.py
-    │   ├── database.py             // Conexão com o MySQL 
-    │   └── PedidoRepository.py
-    ├── interfaces/                  // Interfaces
-    │   ├── IAuthService.py
-    │   ├── ICardapioService.py
-    │   └── IPedidoService.py
-    ├── main.py
-    ├── models/                      // Entidades do domínio
-    │   ├── Cardapio.py
-    │   ├── Item.py
-    │   └── Pedido.py
-    ├── router.py                   // Controller
-    └── services/                    // Serviços da Aplicação
-        ├── CardapioService.py
-        ├── LoginService.py
-        └── PedidoService.py
+├── src/
+│   ├── database/                    // Repositories
+│   │   ├── CardapioRepository.py
+│   │   ├── database.py             // Conexão com o MySQL 
+│   │   └── PedidoRepository.py
+│   ├── interfaces/                  // Interfaces
+│   │   ├── IAuthService.py
+│   │   ├── ICardapioService.py
+│   │   └── IPedidoService.py
+│   ├── main.py
+│   ├── models/                      // Entidades do domínio
+│   │   ├── Cardapio.py
+│   │   ├── Item.py
+│   │   └── Pedido.py
+│   ├── router.py                   // Controller
+│   └── services/                    // Serviços da Aplicação
+│       ├── CardapioService.py
+│       ├── LoginService.py
+│       └── PedidoService.py
+│
+└── templates/
+    ├── index.html                    // Tela de login
+    └── style.css                    // Estilo da tela
 
 ```
