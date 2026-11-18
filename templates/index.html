@@ -6,7 +6,24 @@
 	<link rel="stylesheet" href="style.css">
     <title>RU Adiantado - Login</title>
 </head>
-<body>
-    
+<body style="display:flex; justify-content: center; align-items: center; height: 100vh; background-color: #eeeeee;">
+    <div style="width: 400px; padding: 60px; background-color: #dddddd; border-radius: 15px; font-size: 18px;">
+        <h1>Login - RU</h1>
+        <form id="loginForm"  style="display:flex; align-items: center; flex-direction: column; gap: 20px;">
+            
+            <div style="display:flex; justify-content: space-between; align-items: center; width: 100%;">
+                <label style="font-size: 21px;">Usuário:</label>
+                <input type="text" id="usuario" required placeholder="ex: aluno" style=" font-size: 18px;">
+            </div>
+
+            <div style="display:flex; justify-content: space-between; align-items: center; width: 100%;">
+                <label style="font-size: 21px;">Senha:</label>
+                <input type="password" id="senha" required placeholder="ex: 1234" style=" font-size: 18px;">
+            </div>
+
+            <button type="submit" style="width: 60%; height: 30px;">Entrar</button>
+        </form>
+        <p id="mensagem"></p>
+    </div>
 </body>
 </html>
