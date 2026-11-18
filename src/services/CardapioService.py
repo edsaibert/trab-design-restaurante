@@ -1,3 +1,5 @@
+from fastapi import HTTPException
+
 from src.interfaces.ICardapioService import ICardapioService
 from src.models.ItemCardapio import ItemCardapio
 from src.models.Cardapio import Cardapio
@@ -7,12 +9,15 @@ class CardapioService(ICardapioService):
         self.cardapioRepository = cardapioRepository
 
     def consultarCardapio(self):
-        return self.cardapioRepository.buscar_cardapio()
+        cardapio = self.cardapioRepository.buscar_cardapio()
 
-    def criarCardapio(self, data, listaItens: list[ItemCardapio]): 
+        if cardapio is None: 
+            raise HTTPException(status_code=404, detail="Cardápio não encontrado")
+
+        return cardapio
+
+    def criarCardapio(self, listaItens: list[ItemCardapio]): 
         cardapio = Cardapio(
-            cardapioId=1,
-            data=data,
             itens=listaItens
         )
         return self.cardapioRepository.salvar(cardapio)
@@ -21,7 +26,7 @@ class CardapioService(ICardapioService):
         cardapio = self.cardapioRepository.buscar_cardapio()
 
         if cardapio is None:
-            raise ValueError("Cardápio não encontrado")
+            raise HTTPException(status_code=404, detail="Cardápio não encontrado")
 
         for itemAtualizacao in listaAtualizacoes:
             atualizado = cardapio.atualizarItem(

@@ -39,18 +39,11 @@ def criar_cardapio(cardapioInput: CardapioInputSchema):
         for item in cardapioInput.listaItens
     ]
 
-    cardapio = cardapio_service.criarCardapio(
-        cardapioInput.data,
-        itens
-    )
+    cardapio = cardapio_service.criarCardapio(itens)
 
-    return {
-        "id": cardapio.id,
-        "data": cardapio.data,
-        "listaItens": cardapio.itens
-    }
+    return cardapio
 
-@router.put("/cardapio", response_model=CardapioResponseSchema)
+@router.put("/cardapio", response_model=CardapioResponseSchema, responses={404:{"description":"Cardápio não encontrado"}})
 def atualizar_cardapio(atualizacoes: list[ItemCardapioInputSchema]):
     itens = [
         ItemCardapio(
@@ -66,11 +59,13 @@ def atualizar_cardapio(atualizacoes: list[ItemCardapioInputSchema]):
 
     cardapio = cardapio_service.atualizarCardapio(itens)
 
-    return {
-        "id": cardapio.id,
-        "data": cardapio.data,
-        "listaItens": cardapio.itens
-    }
+    return cardapio
+
+@router.get("/cardapio", response_model=CardapioResponseSchema, responses={404:{"description":"Cardápio não encontrado"}})
+def consultar_cardapio():
+    cardapio = cardapio_service.consultarCardapio()
+
+    return cardapio
 
 @router.post("/pedido")
 def criar_pedido(Pedido: PedidoInputSchema) -> PedidoResponseSchema:

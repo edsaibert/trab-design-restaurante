@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from src.models.Cardapio import Cardapio
 
 class CardapioRepository:
@@ -14,6 +16,8 @@ class CardapioRepository:
     #     return self.db.get(Cardapio, cardapioId)
 
     def salvar(self, cardapio):
+        cardapio.id = 1
+        cardapio.data = datetime.now()
         self.teste = cardapio
         return cardapio
 

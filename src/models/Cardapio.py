@@ -1,9 +1,9 @@
 from src.models.ItemCardapio import ItemCardapio 
 
 class Cardapio:
-    def __init__(self, cardapioId, data, itens: list):
-        self.id = cardapioId
-        self.data = data.date()
+    def __init__(self, itens: list):
+        self.id = None
+        self.data = None
         self.itens = itens
 
     def criaItem(self, itemId, itemNome, itemPorcoes,

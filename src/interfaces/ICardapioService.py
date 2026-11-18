@@ -11,7 +11,7 @@ class ICardapioService(ABC):
         pass
 
     @abstractmethod
-    def criarCardapio(self, data, listaItens: list):
+    def criarCardapio(self, listaItens: list):
         pass
 
     @abstractmethod
