@@ -1,34 +1,51 @@
+from src.interfaces.ICardapioService import ICardapioService
+from src.models.ItemCardapio import ItemCardapio
 from src.models.Cardapio import Cardapio
 
-class CardapioService:
+class CardapioService(ICardapioService):
     def __init__(self, cardapioRepository):
         self.cardapioRepository = cardapioRepository
 
-    def criarCardapio(self, cardapioId, data, dicioItens):
-        novoCardapio = Cardapio(
-            cardapioId = cardapioId, 
-            data = data, 
-            dicioItens = dicioItens
+    def consultarCardapio(self):
+        return self.cardapioRepository.buscar_cardapio()
+
+    def criarCardapio(self, data, listaItens: list[ItemCardapio]): 
+        cardapio = Cardapio(
+            cardapioId=None,
+            data=data,
+            itens=listaItens
         )
-        
-        return novoCardapio
+        return self.cardapioRepository.salvar(cardapio)
 
-    def salvarCardapio(self, cardapio):
-        self.cardapioRepository.salvar(cardapio)
+    def atualizarCardapio(self, listaAtualizacoes: list[ItemCardapio]):
+        cardapio = self.cardapioRepository.buscar_cardapio()
 
-    def consultarCardapio(self, cardapio):
-        return cardapio.dicioItens.values()
+        if cardapio is None:
+            raise ValueError("Cardápio não encontrado")
 
-    def atualizarCardapio(self, cardapio, listaAtualizacoes):
-        for itemId in listaAtualizacoes.dicioItens:
-            if itemId in cardapio.dicioItens:
-                itemLista = listaAtualizacoes.dicioItens[itemId]
-                cardapio.atualizar_item(
-                    itemId,
-                    itemLista.nome,
-                    itemLista.porcoes,
-                    itemLista.tamanhoPorcao,
-                    itemLista.vegano
+        for itemAtualizacao in listaAtualizacoes:
+            atualizado = cardapio.atualizarItem(
+                itemAtualizacao.id,
+                itemAtualizacao.nome,
+                itemAtualizacao.porcoes,
+                itemAtualizacao.tamanhoPorcao,
+                itemAtualizacao.vegano
+            )
+
+            if not atualizado:
+                raise ValueError(
+                    f"Item {itemAtualizacao.id} não encontrado no cardápio"
                 )
-    
-        self.cardapioRepository.salvar(cardapio)
+
+        return self.cardapioRepository.salvar(cardapio)
+
+    def consultarDisponibilidade(self, idItem, quantidade):
+        cardapio = self.cardapioRepository.buscar_cardapio()
+
+        if cardapio is None:
+            return False
+
+        return cardapio.consultarDisponibilidade(
+            idItem,
+            quantidade
+        )

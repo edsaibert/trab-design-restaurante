@@ -1,4 +1,5 @@
-class Item:
+
+class ItemCardapio:
     def __init__(self, id, nome, porcoes, tamanhoPorcao, vegano, disponibilidade):
         self.id = id
         self.nome = nome

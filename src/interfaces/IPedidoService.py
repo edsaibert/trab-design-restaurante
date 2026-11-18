@@ -6,9 +6,9 @@ class IPedidoService(ABC):
         pass
 
     @abstractmethod
-    def consultarCardapio(self, nomeItem):
+    def consultarPedido(self, nomeItem):
         pass
 
     @abstractmethod
-    def cancelarCardapio(self, nomeItem):
+    def cancelarPedido(self, nomeItem):
         pass
