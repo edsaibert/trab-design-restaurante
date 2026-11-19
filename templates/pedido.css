@@ -1,0 +1,36 @@
+body {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #eeeeee;
+}
+
+#cardapioBox {
+    width: 400px;
+    padding: 60px;
+    background-color: #dddddd;
+    border-radius: 15px;
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+#pedidoButton {
+    width: 60%;
+    height: 30px;
+    align-self: center;
+}
+
+#listaCardapio {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 12px;
+}
+
+#listaCardapio li {
+    display: flex;
+    justify-content: space-between;
+}
