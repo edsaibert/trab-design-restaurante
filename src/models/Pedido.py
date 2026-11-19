@@ -37,4 +37,4 @@ class Pedido:
         if self.data is None:
             return False
 
-        return dataAtual <= (self.data + timedelta(seconds=2))
+        return dataAtual <= (self.data + timedelta(hours=2))

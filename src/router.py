@@ -98,3 +98,14 @@ def criar_pedido(pedido_input: PedidoInputSchema, pedido_service: PedidoService 
 
     pedido = Pedido(itens)
     return pedido_service.realizarPedido(pedido) 
+
+@router.post("/pedido/{pedido_id}/cancelar", response_model=PedidoResponseSchema)
+def cancelar_pedido(pedido_id: int, pedido_service: PedidoService = Depends(get_pedido_service)):
+    pedido_service.cancelarPedido(pedido_id)
+    return pedido_service.consultarPedido(pedido_id)
+
+@router.get("/pedido", response_model=PedidoResponseSchema)
+def consultar_pedido(pedido_id: int, pedido_service: PedidoService = Depends(get_pedido_service)):
+    pedido = pedido_service.consultarPedido(pedido_id)
+
+    return pedido
