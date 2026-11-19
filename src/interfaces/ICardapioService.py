@@ -15,9 +15,9 @@ class ICardapioService(ABC):
         pass
 
     @abstractmethod
-    def atualizarCardapio(self):
+    def atualizarCardapio(self, listaAtualizacoes):
         pass
 
     @abstractmethod
-    def consultarDisponibilidade(self, idItem, quantidade):
+    def consultarDisponibilidade(self, idItem, quantidade) -> bool:
         pass
