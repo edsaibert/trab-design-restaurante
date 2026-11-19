@@ -4,6 +4,8 @@ from src.interfaces.ICardapioService import ICardapioService
 from src.models.ItemCardapio import ItemCardapio
 from src.models.Cardapio import Cardapio
 
+from datetime import datetime
+
 class CardapioService(ICardapioService):
     def __init__(self, cardapioRepository):
         self.cardapioRepository = cardapioRepository
@@ -18,6 +20,8 @@ class CardapioService(ICardapioService):
 
     def criarCardapio(self, listaItens: list[ItemCardapio]): 
         cardapio = Cardapio(
+            id = None,
+            data=datetime.now(),
             itens=listaItens
         )
         return self.cardapioRepository.salvar(cardapio)
