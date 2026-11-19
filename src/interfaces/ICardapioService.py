@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from src.models.ItemCardapio import ItemCardapio
 
 class ICardapioService(ABC):
 
@@ -11,11 +12,11 @@ class ICardapioService(ABC):
         pass
 
     @abstractmethod
-    def criarCardapio(self, listaItens: list):
+    def criarCardapio(self, listaItens: list[ItemCardapio]):
         pass
 
     @abstractmethod
-    def atualizarCardapio(self, listaAtualizacoes):
+    def atualizarCardapio(self, listaAtualizacoes: list[ItemCardapio]):
         pass
 
     @abstractmethod
