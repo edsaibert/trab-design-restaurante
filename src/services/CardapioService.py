@@ -32,7 +32,7 @@ class CardapioService(ICardapioService):
         if cardapio is None:
             raise HTTPException(status_code=404, detail="Cardápio não encontrado")
 
-        cardapio = listaItensAtualizada
+        cardapio.itens = listaItensAtualizada
 
         return self.cardapioRepository.salvar(cardapio)
 
