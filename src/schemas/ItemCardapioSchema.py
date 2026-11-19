@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 from itertools import count
 
 class ItemCardapioInputSchema(BaseModel):
-    id: int = Field(default_factory=count(1).__next__)
+    id: int = Field()
     nome: str 
     porcoes: int = Field(default=1)
     tamanhoPorcao: int = Field(default=1)
