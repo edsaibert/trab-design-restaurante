@@ -43,6 +43,74 @@ Fluxo alternativo (`Usuario` não é um administrador do sistema, então seu ace
 5. `RUCardapioService` chama `Log` para registrar a tentativa de alteração no cardápio
 6. `Log` devolve uma confirmação do registro para `RUCardapioService`
 
+### Fazer Pedido
+
+![diag-seq-fazer-pedido](./diagramas/sequencia/Caso%20de%20Uso%20Principal/Diagrama%20de%20Sequencia%20-%20Caso%20de%20Uso%20Principal.png)
+
+Fluxo principal (`Usuario` faz seu pedido com todos os itens disponíveis):
+
+1. `Usuario` faz uma consulta ao cardápio, enviando a requisição para `PedidoService`
+2. `PedidoService` chama `Cardapio` para realizar a consulta
+3. `Cardapio` devolve o cardápio para `PedidoService`
+4. `PedidoService` exibe o cardápio obtido para `Usuario`
+5. Enquanto `Usuario` continuar escolhendo itens:
+    5.1. `Usuario` seleciona um item
+    5.2. `PedidoService` chama `Cardapio` para consultar a disponibilidade do item selecionado
+    5.3. `Cardapio` devolve que o item selecionado está disponível
+    5.4. `PedidoService` chama `Pedido` para adicionar o item ao pedido de `Usuario`
+    5.5. `Pedido` devolve a `PedidoService` a confirmação de que o item foi adicionado
+    5.6. `PedidoService` notifica `Usuario`, localmente, de que o item foi adicionado ao pedido
+6. `Usuario` chama `PedidoService` para realizar o pedido
+7. `PedidoService` chama `Pedido` para registrar o pedido
+8. `PedidoService` chama `Log` para registrar o *log* do pedido
+9. `Log` devolve uma confirmação do registro para `PedidoService`
+10. `PedidoService` chama `RUNotificator` para emitir uma notificação da confirmação do pedido
+11. `RUNotificator` devolve a notificação para `PedidoService`
+12. `PedidoService` repassa a notificação para `Usuario`
+
+Fluxo alternativo (`Usuario` faz seu pedido, mas ao menos 1 item se encontra indisponível):
+
+1. `Usuario` faz uma consulta ao cardápio, enviando a requisição para `PedidoService`
+2. `PedidoService` chama `Cardapio` para realizar a consulta
+3. `Cardapio` devolve o cardápio para `PedidoService`
+4. `PedidoService` exibe o cardápio obtido para `Usuario`
+5. Enquanto `Usuario` continuar escolhendo itens:
+    5.1. `Usuario` seleciona um item
+    5.2. `PedidoService` chama `Cardapio` para consultar a disponibilidade do item selecionado
+    5.3. Se o item estiver disponível, `Cardapio` devolve que o item selecionado está disponível, e que está indisponível caso contrário
+    5.4. `PedidoService` chama `Pedido` para adicionar o item ao pedido de `Usuario`, caso ele esteja disponível
+    5.5. `Pedido` devolve a `PedidoService` a confirmação de que o item foi adicionado; notifica localmente o usuário acerca da indisponibilidade do item caso este não esteja disponível
+    5.6. `PedidoService` notifica `Usuario`, localmente, de que o item foi adicionado ao pedido
+6. `Usuario` chama `PedidoService` para realizar o pedido
+7. `PedidoService` chama `Pedido` para registrar o pedido
+8. `PedidoService` chama `Log` para registrar o *log* do pedido
+9. `Log` devolve uma confirmação do registro para `PedidoService`
+10. `PedidoService` chama `RUNotificator` para emitir uma notificação da confirmação do pedido
+11. `RUNotificator` devolve a notificação para `PedidoService`
+12. `PedidoService` repassa a notificação para `Usuario`
+
+### Fazer *Login*
+
+![diag-seq-fazer-login](./diagramas/sequencia/Login/Diagrama%20de%20Sequencia%20-%20Login.png)
+
+Fluxo principal (autenticação ocorreu sem falhas):
+
+1. `Usuario` informa suas credenciais na Tela da Aplicação
+2. A Tela da Aplicação realiza requisição de *login* para `RULogin`
+3. `RULogin` chama `AuthService` para autenticar as credenciais
+4. `AuthService` devolve um *token*
+5. `RULogin` devolve o *token* para a Tela da Aplicação
+6. A Tela da Aplicação autentica o usuário
+
+Fluxo alternativo (autenticação falhou):
+
+1. `Usuario` informa suas credenciais na Tela da Aplicação
+2. A Tela da Aplicação realiza requisição de *login* para `RULogin`
+3. `RULogin` chama `AuthService` para autenticar as credenciais
+4. `AuthService` devolve uma negativa de *login*
+5. `RULogin` devolve a negativa de *login* para a Tela da Aplicação
+6. A Tela da Aplicação notifica o usuário de que a autenticação falhou
+
 ### Autores
 
 Sofia Barbosa Candiotto, Eduarda Saibert, Caio Eduardo Ferreira de Miranda, Kawai Barzotto.
