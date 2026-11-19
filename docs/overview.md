@@ -111,6 +111,19 @@ Fluxo alternativo (autenticação falhou):
 5. `RULogin` devolve a negativa de *login* para a Tela da Aplicação
 6. A Tela da Aplicação notifica o usuário de que a autenticação falhou
 
+### Diagrama de componentes
+
+O diagrama de componentes abaixo:
+
+![diag-componentes](./diagramas/componentes/componentes.drawio.png)
+
+Expõe os componentes do sistema e os contratos expostos por cada um para que ocorra a comunicação entre eles. É importante que sejam destacados alguns pontos:
+
+- `CardapioService` dispõe de comunicação bidirecional com o Banco de Dados para indicar leitura e escrita
+- O serviço de autenticação é um componente externo, então é mostrado separadamente
+
+### Diagrama de comunicação
+
 ### Autores
 
 Sofia Barbosa Candiotto, Eduarda Saibert, Caio Eduardo Ferreira de Miranda, Kawai Barzotto.
