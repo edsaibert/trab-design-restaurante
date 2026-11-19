@@ -1,16 +1,50 @@
 from src.interfaces.IPedidoService import IPedidoService
+from src.interfaces.ICardapioService import ICardapioService
+from src.database.interfaces.PedidoRepository import PedidoRepository
+
+from fastapi import HTTPException
+from datetime import datetime
 from src.models.Pedido import Pedido
 
 class PedidoService(IPedidoService):
-    def __init__(self, repository=None, cardapioService=None) -> None:
+    def __init__(self, repository: PedidoRepository,
+                 cardapioService: ICardapioService):
         self.repository = repository
         self.cardapioService = cardapioService
 
-    def realizarPedido(self, Pedido: Pedido):
-        pass
+    def realizarPedido(self, pedido: Pedido):
+        if pedido.estaVazio():
+            raise HTTPException(
+                status_code=422,
+                detail="O pedido não possui itens"
+            )
+
+        for item in pedido.getItens():
+            disp = self.cardapioService.consultarDisponibilidade(item.idItemCardapio, item.porcoes)
+
+            if not disp:
+                raise HTTPException(status_code=422, detail=f"Item {item.idItemCardapio} indisponível")
+
+        return self.repository.salvar(pedido)
 
     def consultarPedido(self, id: int):
-        pass
+        pedido = self.repository.buscar_pedido(id)
+
+        if pedido is None:
+            raise HTTPException(
+                status_code=404,
+                detail="Pedido não encontrado"
+            )
+
+        return pedido
 
     def cancelarPedido(self, id: int):
-        pass
+        pedido = self.repository.buscar_pedido(id)
+
+        if pedido is None:
+            raise HTTPException(status_code=404, detail="Pedido não encontrado")
+
+        if not pedido.podeCancelar(datetime.now()):
+            raise HTTPException(status_code=422, detail="Pedido não pode ser cancelado")
+
+        self.repository.cancelar_pedido(id)
