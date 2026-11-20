@@ -26,25 +26,13 @@ class CardapioService(ICardapioService):
         )
         return self.cardapioRepository.salvar(cardapio)
 
-    def atualizarCardapio(self, listaAtualizacoes: list[ItemCardapio]):
+    def atualizarCardapio(self, listaItensAtualizada: list[ItemCardapio]):
         cardapio = self.cardapioRepository.buscar_cardapio()
 
         if cardapio is None:
             raise HTTPException(status_code=404, detail="Cardápio não encontrado")
 
-        for itemAtualizacao in listaAtualizacoes:
-            atualizado = cardapio.atualizarItem(
-                itemAtualizacao.id,
-                itemAtualizacao.nome,
-                itemAtualizacao.porcoes,
-                itemAtualizacao.tamanhoPorcao,
-                itemAtualizacao.vegano
-            )
-
-            if not atualizado:
-                raise ValueError(
-                    f"Item {itemAtualizacao.id} não encontrado no cardápio"
-                )
+        cardapio.itens = listaItensAtualizada
 
         return self.cardapioRepository.salvar(cardapio)
 

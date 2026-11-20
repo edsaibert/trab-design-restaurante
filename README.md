@@ -114,36 +114,45 @@ http://127.0.0.1:8000/docs
 │   └── tradeoffs.md
 ├── README.md
 └── src
-    ├── database
-    │   ├── create_tables.py
-    │   ├── database.py
-    │   ├── interfaces
-    │   │   ├── CardapioRepository.py
-    │   │   ├── LogRepository.py
-    │   │   └── PedidoRepository.py
-    │   ├── SQLAlchemyCardapioRepository.py
-    │   ├── SQLAlchemyLogRepository.py
-    │   └── SQLAlchemyPedidoRepository.py
-    ├── interfaces
-    │   ├── IAuthService.py
-    │   ├── ICardapioService.py
-    │   └── IPedidoService.py
-    ├── main.py
-    ├── models
-    │   ├── Cardapio.py
-    │   ├── ItemCardapio.py
-    │   ├── ItemPedido.py
-    │   └── Pedido.py
-    ├── requirements.txt
-    ├── router.py
-    ├── schemas
-    │   ├── CardapioSchema.py
-    │   ├── ItemCardapioSchema.py
-    │   ├── ItemPedidoSchema.py
-    │   └── PedidoSchema.py
-    └── services
-        ├── CardapioService.py
-        ├── LoginService.py
-        └── PedidoService.py
+│   ├── database
+│   │   ├── create_tables.py
+│   │   ├── database.py
+│   │   ├── interfaces
+│   │   │   ├── CardapioRepository.py
+│   │   │   ├── CardapioRepository.py
+│   │   │   ├── CardapioRepository.py
+│   │   │   ├── LogRepository.py
+│   │   │   └── PedidoRepository.py
+│   │   ├── SQLAlchemyCardapioRepository.py
+│   │   ├── SQLAlchemyLogRepository.py
+│   │   └── SQLAlchemyPedidoRepository.py
+│   ├── interfaces
+│   │   ├── IAuthService.py
+│   │   ├── ICardapioService.py
+│   │   └── IPedidoService.py
+│   ├── main.py
+│   ├── models
+│   │   ├── Cardapio.py
+│   │   ├── ItemCardapio.py
+│   │   ├── ItemPedido.py
+│   │   └── Pedido.py
+│   ├── requirements.txt
+│   ├── router.py
+│   ├── schemas
+│   │   ├── CardapioSchema.py
+│   │   ├── ItemCardapioSchema.py
+│   │   ├── ItemPedidoSchema.py
+│   │   └── PedidoSchema.py
+│   └── services
+│       ├── CardapioService.py
+│       ├── LoginService.py
+│       └── PedidoService.py
+│
+└── templates/
+    ├── index.html                    // Tela de login
+    ├── login.css                    // Estilo da tela de login
+    ├── pedido.html                    // Tela de pedido
+    ├── pedido.js                    // Scripts da tela de pedido
+    └── pedido.css                    // Estilo da tela de pedido
 
 ```
