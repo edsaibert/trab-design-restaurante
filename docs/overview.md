@@ -2,8 +2,21 @@
 
 Este documento fornece um *overview* do sistema construído no trabalho final da disciplina de Design de Software.
 
+# Requisitos
+
+Os requisitos funcionais e regras de negócio que o sistema deve implementar estão detalhados [aqui](./requisitos.md).
+
 # Arquitetura
+
 A arquitetura usada no sistema é um **Cliente-Servidor Monolítico Modular**, dadas sua facilidade de implementação inicial e características dadas pelo enunciado e pelos requisitos. Informações mais detalhadas podem ser encontradas na [documentação da arquitetura](./arquitetura.md).
+
+# Alternativas arquiteturais e *trade-offs*
+
+Apesar da arquitetura no estilo Cliente-Servidor Monolítico ter sido a escolhida para o trabalho, também foram consideradas outras alternativas, bem como os *trade-offs* que cada uma traz, [neste documento](./tradeoffs.md).
+
+# ADRs
+
+Foram registrados três ADRs que mostraram mais evidências à equipe de que a solução arquitetural escolhida é a mais adequada para o projeto. Os ADRs se encontram [neste diretório](./adr/).
 
 # Diagramação
 
@@ -160,8 +173,7 @@ Fluxo de execução da comunicação:
 
 1. `Usuario` envia requisição para `PedidoService` por `AlterarCardapio`
 2. `PedidoService` chama `AuthService` com `ValidarUsuario`. Existem duas possibilidades de valor de retorno, dependendo da validade das credenciais de `Usuario`:
-    1. [valid] `AuthService` devolve `Ok`
-    2. [invalid] `AuthService` devolve `Not Ok`
+    1. [valid] `AuthService` devolve `Ok` ou [invalid] `AuthService` devolve `Not Ok`
 3. Supondo que `AuthService` devolveu `Ok`, `PedidoService` usa `CriarPedido` com `Pedido` para criar/fazer um pedido
     1. `Pedido` chama `Cardapio` com `ConsultarDisponibiliade` para consultar a disponibilidade do item
     2. [valid] `Cardapio` devolve `Ok`, o item está disponível ou [invalid] `Cardapio` devolve `Not Ok`, o item não está disponível
@@ -175,6 +187,20 @@ Fluxo de execução da comunicação:
 7. `PedidoService` devolve a notificação para `Usuario`
 
 <!-- Nesse diagrama, o passo 3 também foi omitido; a numeração do passo 5 se repete para 5. Salvar e para 5. AdicionarLog... Creio que AdicionarLog deva ser o passo 6 -->
+
+# Detalhes de implementação
+
+Nesta seção, detalhamos algumas características da implementação do projeto.
+
+## Interfaces
+
+## Persistência
+
+## Tela da Aplicação
+
+## Modelos
+
+## Serviços
 
 ### Autores
 
