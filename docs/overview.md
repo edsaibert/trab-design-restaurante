@@ -188,19 +188,45 @@ Fluxo de execução da comunicação:
 
 <!-- Nesse diagrama, o passo 3 também foi omitido; a numeração do passo 5 se repete para 5. Salvar e para 5. AdicionarLog... Creio que AdicionarLog deva ser o passo 6 -->
 
-# Detalhes de implementação
+# Visão geral da implementação
 
-Nesta seção, detalhamos algumas características da implementação do projeto.
+Nesta seção, apresentamos uma visão geral da implementação das interfaces, da tela da aplicação, dos modelos e dos serviços do sistema.
 
 ## Interfaces
 
-## Persistência
+O sistema expõe diversos contratos por interfaces, sendo eles:
 
-## Tela da Aplicação
+- `CardapioRepository.py`, `LogRepository.py` e `PedidoRepository.py`, que fornecem contratos para lidar com a persistência do cardápio, dos *logs* e dos pedidos, respectivamente. Os códigos-fonte estão disponíveis [aqui](../src/database/interfaces/)
+- `IAuthService.py`, `ICardapioService.py` e `IPedidoService.py`, que são fornecidos por seus respectivos serviços para que haja a comunicação entre os componentes do sistema. Os códigos-fonte estão disponíveis [aqui](../src/interfaces/)
+
+## Implementação da persistência
+
+Os contratos de persistência são implementados por `SQLAlchemyCardapioRepository.py`, `SQLAlchemyLogRepository.py` e `SQLAlchemyPedidoRepository.py`, com mapeamento objeto-relacional via SQLAlchemy. Os códigos-fonte estão disponíveis [aqui](../src/database/).
+
+## Tela da aplicação
+
+Foram implementadas telas simples com HTML, CSS e JavaScript para demonstrar o funcionamento de um protótipo executável do sistema. Os códigos-fonte estão disponíveis [aqui](../templates/).
 
 ## Modelos
+O modelo do sistema foi implementado pelas seguintes classes:
+
+- `Cardapio.py`, que permite a criação de novos itens do cardápio, a adição, remoção e atualização de itens e a consulta pela disponibiidade de um dado item
+- `Item.py`, que permite que a disponibilidade de um item seja atualizada conforme a necessidade
+- `ItemCardapio.py`, que funciona da mesma forma que `Item.py`
+- `ItemPedido.py`, que é apenas instanciado e não possui nenhum método em particular
+- `Pedido.py`, que permite a adição e remoção de itens do pedido, a consulta para decidir se o pedido está vazio e a consulta para decidir se é possível cancelar o pedido
+
+Os códigos-fonte estão disponíveis [aqui](../src/models/).
 
 ## Serviços
+
+Os serviços (*services*), ou ainda, os orquestradores de caso de uso do sistema, foram implementados pelas seguintes classes:
+
+- `CardapioService.py`, que permite a consulta pelo cardápio mais recente, a criação e registro de um novo cardápio, a atualização do cardápio e a consulta pela disponibilidade de um item no cardápio mais recente
+- `LoginService.py`, que orquestra os casos de uso relacionados a autenticação dos usuários
+- `PedidoService.py`, que permite a realização de um pedido, a consulta por um pedido e o cancelamento de um pedido
+
+Os códigos-fonte estão disponíveis [aqui](../src/services/).
 
 ### Autores
 
