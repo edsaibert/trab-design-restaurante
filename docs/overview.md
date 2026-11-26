@@ -2,8 +2,21 @@
 
 Este documento fornece um *overview* do sistema construído no trabalho final da disciplina de Design de Software.
 
+# Requisitos
+
+Os requisitos funcionais e regras de negócio que o sistema deve implementar estão detalhados [aqui](./requisitos.md).
+
 # Arquitetura
+
 A arquitetura usada no sistema é um **Cliente-Servidor Monolítico Modular**, dadas sua facilidade de implementação inicial e características dadas pelo enunciado e pelos requisitos. Informações mais detalhadas podem ser encontradas na [documentação da arquitetura](./arquitetura.md).
+
+# Alternativas arquiteturais e *trade-offs*
+
+Apesar da arquitetura no estilo Cliente-Servidor Monolítico ter sido a escolhida para o trabalho, também foram consideradas outras alternativas, bem como os *trade-offs* que cada uma traz, [neste documento](./tradeoffs.md).
+
+# ADRs
+
+Foram registrados três ADRs que mostraram mais evidências à equipe de que a solução arquitetural escolhida é a mais adequada para o projeto. Os ADRs se encontram [neste diretório](./adr/).
 
 # Diagramação
 
@@ -160,8 +173,7 @@ Fluxo de execução da comunicação:
 
 1. `Usuario` envia requisição para `PedidoService` por `AlterarCardapio`
 2. `PedidoService` chama `AuthService` com `ValidarUsuario`. Existem duas possibilidades de valor de retorno, dependendo da validade das credenciais de `Usuario`:
-    1. [valid] `AuthService` devolve `Ok`
-    2. [invalid] `AuthService` devolve `Not Ok`
+    1. [valid] `AuthService` devolve `Ok` ou [invalid] `AuthService` devolve `Not Ok`
 3. Supondo que `AuthService` devolveu `Ok`, `PedidoService` usa `CriarPedido` com `Pedido` para criar/fazer um pedido
     1. `Pedido` chama `Cardapio` com `ConsultarDisponibiliade` para consultar a disponibilidade do item
     2. [valid] `Cardapio` devolve `Ok`, o item está disponível ou [invalid] `Cardapio` devolve `Not Ok`, o item não está disponível
@@ -175,6 +187,46 @@ Fluxo de execução da comunicação:
 7. `PedidoService` devolve a notificação para `Usuario`
 
 <!-- Nesse diagrama, o passo 3 também foi omitido; a numeração do passo 5 se repete para 5. Salvar e para 5. AdicionarLog... Creio que AdicionarLog deva ser o passo 6 -->
+
+# Visão geral da implementação
+
+Nesta seção, apresentamos uma visão geral da implementação das interfaces, da tela da aplicação, dos modelos e dos serviços do sistema.
+
+## Interfaces
+
+O sistema expõe diversos contratos por interfaces, sendo eles:
+
+- `CardapioRepository.py`, `LogRepository.py` e `PedidoRepository.py`, que fornecem contratos para lidar com a persistência do cardápio, dos *logs* e dos pedidos, respectivamente. Os códigos-fonte estão disponíveis [aqui](../src/database/interfaces/)
+- `IAuthService.py`, `ICardapioService.py` e `IPedidoService.py`, que são fornecidos por seus respectivos serviços para que haja a comunicação entre os componentes do sistema. Os códigos-fonte estão disponíveis [aqui](../src/interfaces/)
+
+## Implementação da persistência
+
+Os contratos de persistência são implementados por `SQLAlchemyCardapioRepository.py`, `SQLAlchemyLogRepository.py` e `SQLAlchemyPedidoRepository.py`, com mapeamento objeto-relacional via SQLAlchemy. Os códigos-fonte estão disponíveis [aqui](../src/database/).
+
+## Tela da aplicação
+
+Foram implementadas telas simples com HTML, CSS e JavaScript para demonstrar o funcionamento de um protótipo executável do sistema. Os códigos-fonte estão disponíveis [aqui](../templates/).
+
+## Modelos
+O modelo do sistema foi implementado pelas seguintes classes:
+
+- `Cardapio.py`, que permite a criação de novos itens do cardápio, a adição, remoção e atualização de itens e a consulta pela disponibiidade de um dado item
+- `Item.py`, que permite que a disponibilidade de um item seja atualizada conforme a necessidade
+- `ItemCardapio.py`, que funciona da mesma forma que `Item.py`
+- `ItemPedido.py`, que é apenas instanciado e não possui nenhum método em particular
+- `Pedido.py`, que permite a adição e remoção de itens do pedido, a consulta para decidir se o pedido está vazio e a consulta para decidir se é possível cancelar o pedido
+
+Os códigos-fonte estão disponíveis [aqui](../src/models/).
+
+## Serviços
+
+Os serviços (*services*), ou ainda, os orquestradores de caso de uso do sistema, foram implementados pelas seguintes classes:
+
+- `CardapioService.py`, que permite a consulta pelo cardápio mais recente, a criação e registro de um novo cardápio, a atualização do cardápio e a consulta pela disponibilidade de um item no cardápio mais recente
+- `LoginService.py`, que orquestra os casos de uso relacionados a autenticação dos usuários
+- `PedidoService.py`, que permite a realização de um pedido, a consulta por um pedido e o cancelamento de um pedido
+
+Os códigos-fonte estão disponíveis [aqui](../src/services/).
 
 ### Autores
 
