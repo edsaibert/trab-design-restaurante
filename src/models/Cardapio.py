@@ -1,4 +1,5 @@
 from src.models.ItemCardapio import ItemCardapio 
+from src.models.ItemPedido import ItemPedido
 
 class Cardapio:
     def __init__(self, id, data,itens: list):
@@ -66,3 +67,28 @@ class Cardapio:
             item.disponibilidade
             and item.porcoes >= quantidade
         )
+
+    def reservarPorcoes(self, itensPedido: list[ItemPedido]) -> bool:
+        itensPorId = {item.id: item for item in self.itens}
+        quantidadesPorItem = {}
+
+        for itemPedido in itensPedido:
+            quantidadesPorItem[itemPedido.idItemCardapio] = (
+                quantidadesPorItem.get(itemPedido.idItemCardapio, 0)
+                + itemPedido.porcoes
+            )
+
+        # Valida o pedido inteiro antes de alterar qualquer item.
+        for itemId, quantidade in quantidadesPorItem.items():
+            item = itensPorId.get(itemId)
+            if (item is None or not item.disponibilidade
+                    or item.porcoes < quantidade):
+                return False
+
+        for itemId, quantidade in quantidadesPorItem.items():
+            item = itensPorId[itemId]
+            item.porcoes -= quantidade
+            if item.porcoes == 0:
+                item.disponibilidade = False
+
+        return True

@@ -3,6 +3,7 @@ from fastapi import HTTPException
 from src.interfaces.ICardapioService import ICardapioService
 from src.models.ItemCardapio import ItemCardapio
 from src.models.Cardapio import Cardapio
+from src.models.ItemPedido import ItemPedido
 
 from datetime import datetime
 
@@ -46,3 +47,10 @@ class CardapioService(ICardapioService):
             idItem,
             quantidade
         )
+
+    def reservarPorcoes(self, itensPedido: list[ItemPedido]) -> bool:
+        cardapio = self.consultarCardapio()
+        if not cardapio.reservarPorcoes(itensPedido):
+            return False
+        self.cardapioRepository.salvar(cardapio)
+        return True
