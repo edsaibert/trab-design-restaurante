@@ -1,11 +1,10 @@
-from pydantic import BaseModel
-
 from fastapi import APIRouter, Depends, Header, HTTPException
 from fastapi.responses import JSONResponse
 
 from src.schemas.PedidoSchema import PedidoInputSchema, PedidoResponseSchema
 from src.schemas.CardapioSchema import CardapioInputSchema, CardapioResponseSchema
 from src.schemas.ItemCardapioSchema import ItemCardapioUpdateSchema
+from src.schemas.LoginSchema import LoginSchema
 
 from src.models.Pedido import Pedido
 from src.models.ItemPedido import ItemPedido
@@ -27,10 +26,6 @@ from src.database.SQLAlchemyPedidoRepository import SQLAlchemyPedidoRepository
 
 router = APIRouter()
 
-class LoginRequest(BaseModel):
-    usuario: str
-    senha: str
-
 def get_login_service(db: Session = Depends(get_db)):
     return LoginService()
 
@@ -49,7 +44,7 @@ def get_pedido_service(db: Session = Depends(get_db)):
 
 
 @router.post("/login", response_model=None)
-def login(credenciais: LoginRequest, login_service: LoginService = Depends(get_login_service)):
+def login(credenciais: LoginSchema, login_service: LoginService = Depends(get_login_service)):
     
     return login_service.autenticar(credenciais.usuario, credenciais.senha)
 
