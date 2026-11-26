@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from src.models.ItemCardapio import ItemCardapio
+from src.models.ItemPedido import ItemPedido
 
 class ICardapioService(ABC):
 
@@ -21,4 +22,8 @@ class ICardapioService(ABC):
 
     @abstractmethod
     def consultarDisponibilidade(self, idItem, quantidade) -> bool:
+        pass
+
+    @abstractmethod
+    def reservarPorcoes(self, itensPedido: list[ItemPedido]) -> bool:
         pass

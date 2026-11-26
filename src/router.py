@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, Header, HTTPException
 
 from src.schemas.PedidoSchema import PedidoInputSchema, PedidoResponseSchema
 from src.schemas.CardapioSchema import CardapioInputSchema, CardapioResponseSchema
-from src.schemas.ItemCardapioSchema import ItemCardapioInputSchema
+from src.schemas.ItemCardapioSchema import ItemCardapioUpdateSchema
 
 from src.models.Pedido import Pedido
 from src.models.ItemPedido import ItemPedido
@@ -61,7 +61,7 @@ def criar_cardapio(cardapioInput: CardapioInputSchema, cardapio_service: Cardapi
     return cardapio
 
 @router.put("/cardapio", response_model=CardapioResponseSchema, responses={404:{"description":"Cardápio não encontrado"}})
-def atualizar_cardapio(atualizacoes: list[ItemCardapioInputSchema], cardapio_service: CardapioService = Depends(get_cardapio_service)):
+def atualizar_cardapio(atualizacoes: list[ItemCardapioUpdateSchema], cardapio_service: CardapioService = Depends(get_cardapio_service)):
     itens = [
         ItemCardapio(
             id=item.id,

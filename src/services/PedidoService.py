@@ -19,11 +19,8 @@ class PedidoService(IPedidoService):
                 detail="O pedido não possui itens"
             )
 
-        for item in pedido.getItens():
-            disp = self.cardapioService.consultarDisponibilidade(item.idItemCardapio, item.porcoes)
-
-            if not disp:
-                raise HTTPException(status_code=422, detail=f"Item {item.idItemCardapio} indisponível")
+        if not self.cardapioService.reservarPorcoes(pedido.getItens()):
+            raise HTTPException(status_code=422, detail="Um ou mais itens estão indisponíveis")
 
         return self.repository.salvar(pedido)
 
