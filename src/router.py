@@ -1,4 +1,7 @@
+from pydantic import BaseModel
+
 from fastapi import APIRouter, Depends, Header, HTTPException
+from fastapi.responses import JSONResponse
 
 from src.schemas.PedidoSchema import PedidoInputSchema, PedidoResponseSchema
 from src.schemas.CardapioSchema import CardapioInputSchema, CardapioResponseSchema
@@ -24,6 +27,13 @@ from src.database.SQLAlchemyPedidoRepository import SQLAlchemyPedidoRepository
 
 router = APIRouter()
 
+class LoginRequest(BaseModel):
+    usuario: str
+    senha: str
+
+def get_login_service(db: Session = Depends(get_db)):
+    return LoginService()
+
 def get_cardapio_service(db: Session = Depends(get_db)):
     repository = SQLAlchemyCardapioRepository(db)
     return CardapioService(repository)
@@ -38,9 +48,10 @@ def get_pedido_service(db: Session = Depends(get_db)):
     return PedidoService(pedido_repository, cardapio_service)
 
 
-@router.get("/login")
-def login():
-    return login_service.login()
+@router.post("/login", response_model=None)
+def login(credenciais: LoginRequest, login_service: LoginService = Depends(get_login_service)):
+    
+    return login_service.autenticar(credenciais.usuario, credenciais.senha)
 
 @router.post("/cardapio", response_model=CardapioResponseSchema)
 def criar_cardapio(cardapioInput: CardapioInputSchema, cardapio_service: CardapioService = Depends(get_cardapio_service)):
